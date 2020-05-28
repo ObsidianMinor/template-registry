@@ -56,6 +56,9 @@ async function readRequestBody(request) {
       body[entry[0]] = entry[1]
     }
     return JSON.stringify(body)
+  } else if (contentType.includes('urlencoded')) {
+    const body = new URLSearchParams(await request.text())
+    return body
   } else {
     let myBlob = await request.blob()
     var objectURL = URL.createObjectURL(myBlob)
